@@ -1,0 +1,23 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = hu_HU
+%----------------------------------------------------------------------------
+\chapter*{Bevezető}\addcontentsline{toc}{chapter}{Bevezető}
+%----------------------------------------------------------------------------
+
+%A bevezet? tartalmazza a diplomaterv-kiírás elemzését, történelmi el?zményeit, a feladat indokoltságát (a motiváció leírását), az eddigi megoldásokat, és ennek tükrében a hallgató megoldásának összefoglalását.
+%
+%A bevezet? szokás szerint a diplomaterv felépítésével záródik, azaz annak rövid leírásával, hogy melyik fejezet mivel foglalkozik.
+
+% grafikus keretrendszer, tortn  .. qt gtk, , prior art : miert nem jo. miert csinalod.
+% terv. 
+
+% qt, gtk bemutatása
+% https://en.wikipedia.org/wiki/Compiler#Front_end
+% https://en.wikipedia.org/wiki/Abstract_syntax_tree
+% fák ábrája
+
+% TODO: feladat pontosítása
+A dolgozat a Qt és GTK felhasználói felület keretrendszerek felületleíró nyelvei közötti átjárhatóságot mutatja be.
+Mindkét technológia széleskörűen elterjedt mind a FOSS, mind a kereskedelmi szoftverek körében. A FOSS projektekre jellemző forkolást, továbbfejlesztést segítené a két technológia közötti átjárhatóság. A Qt licencelése jelentősen függ a \textit{The~Qt~Company}-tól, így ha ők a kizárólagos kereskedelmi licenc mellett döntenek \cite{KdeQtOpenSource}, sok projekt bajba kerülhet. A GTK viszont egy tervezése óta szabad szoftverként licencelt GUI keretrendszer, mely alkalmas lehet a Qt helyettesítésére. A Qt, mint keretrendszer pedig alkalmasabb lehet egy komplex projekt megvalósítására, ugyanis az általa biztosított könyvtárak számtalan magasabb absztrakciós szintű osztályt tartalmaznak, ezzel is könnyítve a fejlesztés menetét. Egy fordítóprogram, mely elősegíti a két kezelőfelület-keretrendszer közötti átjárást nagyban segítheti egy projekt más technológiára való átalakítását.
+
+A jelenleg elérhető megoldások nagyon kezdetlegesek, lényegében csak XML $ \rightarrow $ XML és XML $ \rightarrow $ JSON átalakítást tesznek lehetővé, nincs hatékony eljárás a két technológia közötti átjárásra.

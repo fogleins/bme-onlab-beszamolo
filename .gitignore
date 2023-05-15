@@ -1,0 +1,10 @@
+*.aux
+*.bbl
+*.log
+*.blg
+*.out
+
+mybib.bib.bak
+mybibisoenc.bib
+
+iso-8859-2/*
