@@ -36,10 +36,44 @@ A Qt elsődleges programozási nyelve a C++, míg a GTK-é a C, bár mindkettőh
 A felhasználói felületek leírásához alapvetően mindkét technológia XML-alapú megoldást használ, bár a Qt esetében lehetőség van a JSON-alapú QML használatára is. A~QML~(Qt~Modeling~Language) egy deklaratív felhasználóifelület-leíró nyelv, melyet a Nokia fejlesztett a Qt projekthez 2009 környékén \cite{QmlWiki}. Előnye az XML-alapú megoldáshoz képest, hogy könnyebben áttekinthető, valamint lehetőséget biztosít JavaScript használatára is, így például a KDE számos alkalmazását folyamatosan portolják át a hagyományos C++ és XML technológia helyett a QML-esre (ugyanakkor a QML részei is elérhetőek C++ kódból, például lehetőség van eseménykezelők regisztrálására is).
 
 % TODO: gtk builder vs qt xml-es gui felépítése
+% qt a .ui fájlokból a uic segítségével generál ui osztályokat
+% gui editorok
+A felületleírókban megadott kinézet előállításához a GTK a GTK Builder\footnote{\url{https://docs.gtk.org/gtk3/class.Builder.html}} osztályt használja, míg a Qt a \texttt{uic} segédprogram segítségével generál osztályokat a \texttt{.ui} fájlokból~\cite{qtnotepadtutorial}. Az így generált osztályok a \texttt{Ui} névtéren belül érhetőek el. A felület kódbeli inicializálását az alábbi táblázat mutatja be:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Qt & GTK \\
+		\hline
+		\begin{minipage}{0.35\linewidth}
+			\begin{lstlisting}
+ui(new Ui::Notepad);
+ui->setupUi(this);
+			\end{lstlisting}
+		\end{minipage}
+		&
+		\begin{minipage}{0.35\linewidth}
+			\begin{lstlisting}
+Gtk::Builder::
+    new_from_file("ui.glade")
+			\end{lstlisting}
+		\end{minipage} \\
+		\hline
+	\end{tabular}
+	\label{tab:qtgtkxmlbuild}
+	\caption{XML-ben definiált felhasználói felület inicializálása Qt-t és GTK-t használó programokban}
+\end{table}
+
+Mivel mindkét szóban forgó keretrendszer lehetőséget biztosít összetett felhasználói felületek létrehozására, és ezek leírása kézzel nagyon körülményes lenne, ezért lehetőség van a felhasználói felületek vizuális összeállítására. Mind a Qt, mind a GTK rendelkezik ilyen programmal: Qt esetében ilyen például a Qt Creator, míg GTK-nál a Glade a legnépszerűbb GUI összeállító program. A későbbiekben az ilyen programokkal létrehozott UI-leírók feldolgozására összpontosítunk.
+
+{
+\kep[0.6]{figures/qtcreator.png}{A Qt Creator felhasználói felülete design nézetben Forrás:~\url{https://itom.bitbucket.io/v2-1-0/docs/06_extended_gui/qtdesigner.html}}{qtcreator}
+\kep[0.4]{figures/glade.png}{A Glade felhasználói felülete Forrás:~\url{https://stackoverflow.com/a/48178780}}{glade}}
 
 \begin{landscape}
 	\thispagestyle{empty} % oldalszámozás kihagyása a fektetett oldalon
 	\centering % táblázat középre igazítása
+	\begin{table}
 	\begin{tabular}{|c|c|c|}
 		\hline
 		QML & Qt XML & GTK XML \\
@@ -104,4 +138,7 @@ QWidget {
 		\end{minipage} \\
 		\hline
 	\end{tabular}
+	\caption{A QML, Qt XML és a GTK XML felépítésének összehasonlítása}
+	\label{tab:sourcecomparison}
+	\end{table}
 \end{landscape}

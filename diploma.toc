@@ -4,9 +4,14 @@
 \select@language {magyar} \contentsline {chapter}{\numberline {1}A Qt és GTK keretrendszerek áttekintése}{6}{chapter.1}%
 \select@language {magyar} \contentsline {section}{\numberline {1.1}Bemutatás, rövid történet}{6}{section.1.1}%
 \select@language {magyar} \contentsline {section}{\numberline {1.2}Technológiai áttekintés}{7}{section.1.2}%
-\select@language {magyar} \contentsline {chapter}{\numberline {2}Fordítóprogramok}{9}{chapter.2}%
-\select@language {magyar} \contentsline {section}{\numberline {2.1}Fordítóprogramok bemutatása}{9}{section.2.1}%
-\select@language {magyar} \contentsline {section}{\numberline {2.2}Fordítóprogramok architektúrája}{9}{section.2.2}%
-\select@language {magyar} \contentsline {chapter}{\numberline {3}Saját munka bemutatása}{10}{chapter.3}%
-\select@language {magyar} \contentsline {chapter}{Köszönetnyilvánítás}{11}{chapter*.6}%
-\select@language {magyar} \contentsline {chapter}{Irodalomjegyzék}{12}{chapter*.7}%
+\select@language {magyar} \contentsline {chapter}{\numberline {2}Fordítóprogramok}{10}{chapter.2}%
+\select@language {magyar} \contentsline {section}{\numberline {2.1}Fordítóprogramok bemutatása}{10}{section.2.1}%
+\select@language {magyar} \contentsline {subsection}{\numberline {2.1.1}Fordítóprogramok típusai}{10}{subsection.2.1.1}%
+\select@language {magyar} \contentsline {subsubsection}{Source-to-source fordítók}{10}{section*.10}%
+\select@language {magyar} \contentsline {section}{\numberline {2.2}Fordítóprogramok architektúrája}{11}{section.2.2}%
+\select@language {magyar} \contentsline {chapter}{\numberline {3}Saját munka bemutatása}{12}{chapter.3}%
+\select@language {magyar} \contentsline {section}{\numberline {3.1}Feladat specifikációja}{12}{section.3.1}%
+\select@language {magyar} \contentsline {subsection}{\numberline {3.1.1}Közös részhalmaz meghatározása}{12}{subsection.3.1.1}%
+\select@language {magyar} \contentsline {section}{\numberline {3.2}A program felépítése és működése}{13}{section.3.2}%
+\select@language {magyar} \contentsline {chapter}{Köszönetnyilvánítás}{14}{chapter*.11}%
+\select@language {magyar} \contentsline {chapter}{Irodalomjegyzék}{15}{chapter*.12}%

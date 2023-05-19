@@ -3,8 +3,17 @@
 
 \chapter{Saját munka bemutatása}
 
-A fordítóprogramok nagyon komplex szoftverek. A legismertebb C/C++ fordítóprogram talán a GCC (GNU Compiler Collection), amely óriási kódbázissal rendelkezik, 2019-ben~körülbelül 15~millió sort tartalmaztak a forrásállományai \cite{GccWiki}. Természetesen egy GCC~szintű fordítóprogram számos olyan funkcióval rendelkezik, mely a több, mint 36 évnyi fejlesztésből és a projekt léptékéből adódik, ilyen például a többféle programozási nyelv támogatása, valamint a fejlett optimalizációs megoldások. Ezen funkciók közül jó néhányat egy felhasználóifelület-leíró nyelveket támogató fordítóprogramnak nem szükséges biztosítania, és mivel az Önálló laboratórium tárgy választott témájának keretében a fordítóprogramok felépítésének és készítésének, valamint a programozási nyelvek konstrukcióinak mélyebb megismerése állt a középpontban, így elsősorban ezekre fektettem nagy hangsúly az irodalomkutatás során, továbbá ilyen területekre fogok összpontosítani a fordítóprogramom implementálása alatt is.
+A fordítóprogramok nagyon komplex szoftverek. A legismertebb C/C++ fordítóprogram talán a GCC (GNU Compiler Collection), amely óriási kódbázissal rendelkezik, 2019-ben~körülbelül 15~millió sort tartalmaztak a forrásállományai \cite{GccWiki}. Természetesen egy GCC szintű fordítóprogram számos olyan funkcióval rendelkezik, mely a több, mint 36 évnyi fejlesztésből és a projekt léptékéből adódik, ilyen például a többféle programozási nyelv támogatása, valamint a fejlett optimalizációs megoldások. Ezen funkciók közül jó néhányat egy felhasználóifelület-leíró nyelveket támogató fordítóprogramnak nem szükséges biztosítania, és mivel az Önálló laboratórium tárgy választott témájának keretében a fordítóprogramok felépítésének és készítésének, valamint a programozási nyelvek konstrukcióinak mélyebb megismerése állt a középpontban, így elsősorban ezekre fektettem nagy hangsúlyt az irodalomkutatás során, továbbá ilyen területekre fogok összpontosítani a fordítóprogramom implementálása alatt is.
 
+
+
+\section{Feladat specifikációja}
+Az Önálló laboratórium projekt keretében egy úgynevezett \textit{source-to-source} fordítót készítek. Amint azt \az{ \sectref{compilerintro}}.~fejezetben ismertettem, az ilyen fordítók forrásfájlok közötti fordításra alkalmasak, azaz a bemenetként kapott fájlokból nem futtatható kódot generálnak, hanem egy másik nyelvre fordítják át azt. A projektfeladat keretében létrehozott fordító \az{\sectref{qtgtkoverview}}.~fejezetben és \az{\tabref{sourcecomparison}}~táblázatban bemutatott keretrendszerek felületleíró nyelveinek egy részhalmazát képes a QML, Qt XML és GTK XML között átalakítani.
+
+\subsection{Közös részhalmaz meghatározása}
+Mivel a feladat során a hangsúly a fordítóprogramok felépítésének és működésének megismerésén van, továbbá az ismertetett keretrendszerek rengeteg felhasználásiterület-specifikus komponenssel rendelkeznek, melyeknek gyakran nincs is pontos megfelelője a másik keretrendszerben, ezért a fordítandó komponenseket az alapvető felhasználói felületi elemekre korlátoztam. Így végül egyszerű konténerek, gombok és beviteli mezők fordítására van lehetőség a programban.
+
+\section{A program felépítése és működése}
 
 % köztes reprezentáció a különböző bemenetek alapján a middle-endre
 % xml, qml gráf rajzolása dotml schema (DOT) graphviz XML; svg generálása?

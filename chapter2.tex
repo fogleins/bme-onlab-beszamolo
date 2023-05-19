@@ -3,7 +3,24 @@
 
 \chapter{Fordítóprogramok}
 
-\section{Fordítóprogramok bemutatása}
-A fordítóprogramok olyan számítógépes szoftverek, amelyek egy adott programozási nyelven írt programot képesek egy másik programozási nyelvre, vagy számítógépek által értelmezhető, futtatható gépi kódra átalakítani.
+\section{Fordítóprogramok bemutatása} \label{sect:compilerintro}
+A fordítóprogramok olyan számítógépes szoftverek, amelyek egy adott programozási nyelven (forrásnyelv) írt programot képesek egy másik programozási nyelvre (célnyelv), vagy számítógépek által értelmezhető, futtatható gépi kódra átalakítani \cite{CompilerWiki} \cite{ForditoWiki}.
+
+\subsection{Fordítóprogramok típusai} \label{sect:compilertypes}
+A fordítóprogramoknak számos fajtája van. A legismertebbek azok a fordítók, amelyek magas szintű programozási nyelven írt bemenetekből készítenek gépi vagy más alacsony szintű kimenetet. Ezek közé sorolható többek között a \textit{clang}, \textit{GCC} és a \textit{javac} is. Ezeknek az ellentéte a \textit{decompiler}, mely alacsony szintű (akár futtatható, gépi kódú) bemenetet alakít át magasabb absztrakciós szinten lévő nyelv kódjára. Létezik még továbbá úgynevezett \textit{rewriter} fordító is, mely az eredeti forrásnyelven készít úgy kimenetet, hogy az lényegileg ne változzon (a bemeneti forráskódot és a kimenetet lefordítva ugyanazt a működést kell adnia a programnak). Ezek hasznosak lehetnek például kód refaktorálás vagy olyan API változtatások esetén, amikor egy könyvtár új verziója nem kompatibilis a korábbi verziókkal.
+
+\subsubsection{Source-to-source fordítók}
+Source-to-source fordítóprogramról akkor beszélhetünk, ha az adott fordító két -- nagyjából megegyező absztrakciós szinten lévő -- programozási nyelv között fordít. A fordítóprogramok ezen típusának története körülbelül az 1970-es évek második felére vezethető vissza. Ebben az időben ugyanis nem volt még jelen egy általánosan elfogadott szabvány a processzorok utasításkészletére, sőt, a technológia fejlődésével az utasításkészletek rohamosan változtak, így például az Intel egyes termékei sem voltak kompatibilisek egy korábbi architektúrára írt programmal. Ezt azonban érthető okokból igyekeztek elkerülni, a 16 bites 8086-os CPU-t például már úgy hozták forgalomba, hogy az elméletben kompatibilis volt a 8 bites 8080-ra írt programokkal. A kompatibilitást source-to-source fordítókkal valósították meg, azaz a két processzor utasításkészlete között megfeleltetéseket hoztak létre, és a fordítóprogram ennek megfelelően alakította át a szoftvert, hogy a más architektúrájú számítógépen is fusson \cite{StsCompWiki}.
 
 \section{Fordítóprogramok architektúrája}
+A fordítóprogramok általában három részre bonthatók:
+\begin{itemize}
+	\item Front end
+	\item Middle end
+	\item Back end
+\end{itemize}
+A front end felelős a kód szintaktikai elemzéséért. Amennyiben a kód szintaktikailag helyes, akkor következik egy belső reprezentáció (\textit{intermediate representation, IR}) létrehozása, amellyel majd a fordító a további műveletek során dolgozik. Bár a frontend feladatát akár egy program is elláthatná, a modularitás és a gyorsaság érdekében manapság általában három külön részre osztják: a lexer, mely a forráskód tokenizációjáért, azaz azért felel, hogy a kapott forráskódban szereplő elemeket osztályozza (pl. változó, operátor stb.). Szintén a frontend feladata a szintaktikai elemzés, tehát annak meghatározása, hogy a kód megfelel-e a nyelvtan szabályainak, valamint a szemantikai analízis, mely során többek között típusellenőrzést végez, valamint ellenőrzi, hogy a használni kívánt változókat deklaráltuk-e.
+
+A middle end feladata az optimalizálás, melyet már a frontend által létrehozott belső reprezentáción végez. Az optimalizálás célja a teljesítmény maximalizálása.
+
+A back end végzi a CPU-specifikus optimalizációkat, valamint ennek a modulnak a feladata a végleges kód generálása is.
