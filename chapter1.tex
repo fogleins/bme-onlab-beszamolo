@@ -35,58 +35,73 @@ A Qt elsődleges programozási nyelve a C++, míg a GTK-é a C, bár mindkettőh
 
 A felhasználói felületek leírásához alapvetően mindkét technológia XML-alapú megoldást használ, bár a Qt esetében lehetőség van a JSON-alapú QML használatára is. A~QML~(Qt~Modeling~Language) egy deklaratív felhasználóifelület-leíró nyelv, melyet a Nokia fejlesztett a Qt projekthez 2009 környékén \cite{QmlWiki}. Előnye az XML-alapú megoldáshoz képest, hogy könnyebben áttekinthető, valamint lehetőséget biztosít JavaScript használatára is, így például a KDE számos alkalmazását folyamatosan portolják át a hagyományos C++ és XML technológia helyett a QML-esre (ugyanakkor a QML részei is elérhetőek C++ kódból, például lehetőség van eseménykezelők regisztrálására is).
 
+% TODO: gtk builder vs qt xml-es gui felépítése
+
 \begin{landscape}
-	\begin{tabular}{|l|l|c|}
+	\thispagestyle{empty} % oldalszámozás kihagyása a fektetett oldalon
+	\centering % táblázat középre igazítása
+	\begin{tabular}{|c|c|c|}
 		\hline
 		QML & Qt XML & GTK XML \\
 		\hline
-		\texttt{QWidget \{} & \texttt{<widget class="QWidget"} & \\
-		    \texttt{        name: "centralWidget"} & \texttt{        name="centralWidget">} & \\
-		\begin{minipage}{0.24\linewidth}
-			\begin{verbatim}
-				    
-
-				    QPushButton {
-				        name: "pushButton"
-				            geometry: {
-				            x: 10
-				            y: 20
-				            width: 150
-				            height: 50
-				        }
-				        text: "Hello World!"
-				    }
-				}
-				
-				
-				
-				
-			\end{verbatim}
+		\begin{minipage}[t]{0.3\linewidth}
+			\begin{lstlisting}[numbers=left, xleftmargin=8mm]
+QWidget {
+    name: "centralWidget"
+    QPushButton {
+        name: "pushButton"
+        geometry: {
+            x: 10
+            y: 20
+            width: 150
+            height: 50
+        }
+        text: "Hello World!"
+    }
+}
+			\end{lstlisting}
 		\end{minipage}
-		 & 
-		 	\begin{minipage}{0.3\linewidth}
-		 	\begin{verbatim}
-		 		
-	
-	  <widget class="QPushButton"
-	          name="pushButton">
-	    <property name="geometry">
-	      <rect>
-	        <x>10</x>
-	        <y>20</y>
-	        <width>150</width>
-	        <height>50</height>
-	      </rect>
-	    </property>
-	    <property name="text">
-	      <string>Hello World!</string>
-	    </property>
-	  </widget>
-	</widget>
-		
-		 	\end{verbatim}
-		 \end{minipage}
-		 & kód \\
+		&
+		\begin{minipage}[t]{0.3\linewidth}
+			\begin{lstlisting}[language=xml, numbers=left, xleftmargin=8mm]
+<widget class="QWidget"
+	    name="centralWidget">
+  <widget class="QPushButton"
+          name="pushButton">
+    <property name="geometry">
+      <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>150</width>
+        <height>50</height>
+      </rect>
+    </property>
+    <property name="text">
+      <string>Hello World!</string>
+    </property>
+  </widget>
+</widget>
+			\end{lstlisting}
+		\end{minipage}
+		&
+		\begin{minipage}[t]{0.3\linewidth}
+			\begin{lstlisting}[language=xml, numbers=left, xleftmargin=8mm]
+<object class="GtkFrame">
+  <child>
+    <object class="GtkButton"
+        id="pushButton">
+      <property name="label"
+          translatable="yes">
+          Hello World!
+        </property>
+        <property name="name">
+          pushButton
+        </property>
+    </object>
+  </child>
+</object>
+			\end{lstlisting}
+		\end{minipage} \\
 		\hline
 	\end{tabular}
 \end{landscape}
