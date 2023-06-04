@@ -33,11 +33,15 @@ A felhasználók parancssoron keresztül indíthatják el a programot, itt van l
 \begin{table}[h]
 	\centering
 	\begin{tabular}{c}
-		\begin{minipage}[c]{0.6\linewidth}
-			\begin{lstlisting}[numbers=left, frame=single, language=Python, caption={Hibaüzenetet előidéző kódrészlet}, captionpos=b]
-  <item row="1" column="0">
-    <widget class="QTimeEdit" name="timeEdit"/>
-  </item>
+		\begin{minipage}[c]{0.92\linewidth}
+			\begin{lstlisting}[numbers=left, frame=single, language=Python, caption={A parancssori argumentumok helyességét ellenőrző függvény}, captionpos=b]
+INPUT_FORMATS = ["qml", "glade", "ui"]
+OUTPUT_FORMATS = ["qml", "glade", "ui", "svg"]
+				
+def validate_command(args):
+    return os.path.isfile(args.source_file) \
+        and os.path.splitext(args.source_file)[1][1:] in INPUT_FORMATS \
+        and os.path.splitext(args.destination_file)[1][1:] in OUTPUT_FORMATS
 			\end{lstlisting}
 		\end{minipage}
 	\end{tabular}
@@ -47,25 +51,29 @@ A felhasználók parancssoron keresztül indíthatják el a programot, itt van l
 % TODO: kép a tree-ről
 
 \subsection{Front end}
-A front end feladata, hogy ellenőrizze és értelmezze a kapott forrásfájlokat. A projektem során ide tartozó kódrészek a \textit{parsers} mappában kaptak helyet.
+A front end feladata, hogy ellenőrizze és értelmezze a kapott forrásfájlokat. A projekten belül az ide tartozó kódrészek a \textit{parsers} mappában kaptak helyet.
+
+Ezeknek a moduloknak a felelőssége, hogy a megadott bemeneti fájlokat beolvassák, szintaktikailag ellenőrizzék és felépítsék belőle a middle end által használt abszrakt belső reprezentációt, az Absztrakt Szintakszisfát (Abstract Syntax Tree, AST). Ennek a feladata, hogy az alkotó csomópontok elemeit -- esetünkben a vezérlőelemeket -- a be- és kimeneti nyelvtől függetlenül reprezentálja.
 
 \subsection{Middle end}
-Esetemben a middle end feladata egy egységes reprezentáció biztosítása a felhasználói felület elemei számára, hogy azok a forrás- és célplatformtól függetlenül legyenek kezelhetőek a programon belül.
+Esetemben a middle end feladata egy egységes reprezentáció biztosítása a felhasználói felület elemei számára, hogy azok a forrás- és célplatformtól függetlenül legyenek kezelhetőek a programon belül. Ezt objektumorientáltan, Python osztályok segítségével valósítottam meg.
 
 \kep[1]{figures/uml.pdf}{A belső reprezentáció felépítése}{fig:ir}
 
 \subsection{Back end}
-Kódgenerálás
+A backend feladata a kódgenerálás. Ehhez paraméterként kapja a korábbi lépésekben előállított absztrakt szintakszisfát, és ezek tulajdonságainak ismeretében állítja elő a célnyelv forrásállományait. Ezekhez általában valamilyen sablont használ.
 
 
 \subsection{Hibakezelés}
 A program implementálása során nagy hangsúlyt fektettem a hibakezelésre. Ez igaz mind a felhasználói parancsok értelmezésére, mind a program belső működésére, ezzel is könnyítve a későbbi bővítést és növelve a hibakeresés hatékonyságát.
 
 
+
+
 \begin{table}[h]
 	\centering
 	\begin{tabular}{c}
-		\begin{minipage}[c]{0.6\linewidth}
+		\begin{minipage}[c]{0.65\linewidth}
 			\begin{lstlisting}[numbers=left, frame=single, language=xml, caption={Hibaüzenetet előidéző kódrészlet}, captionpos=b]
   <item row="1" column="0">
     <widget class="QTimeEdit" name="timeEdit"/>
@@ -75,6 +83,18 @@ A program implementálása során nagy hangsúlyt fektettem a hibakezelésre. Ez
 	\end{tabular}
 \end{table}
 
+\begin{table}[h]
+	\centering
+	\begin{tabular}{c}
+		\begin{minipage}[c]{0.65\linewidth}
+			\begin{lstlisting}[numbers=left, frame=single, caption={A fenti kódrészletre kapott hibaüzenet}, captionpos=b]
+ python3 main.py --from mainwindow.ui --to qmlout.qml
+
+ Unsupported widget type 'QTimeEdit' in input file.
+			\end{lstlisting}
+		\end{minipage}
+	\end{tabular}
+\end{table}
 %Exceptionök, nem várt node-ok, programindítás paraméterei
 
 
