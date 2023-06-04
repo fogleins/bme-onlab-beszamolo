@@ -25,6 +25,10 @@
 \usepackage{hyperref}
 \usepackage{pdflscape}
 \usepackage{fancyvrb}
+\usepackage{svg}
+\usepackage[pdf]{graphviz}
+\usepackage{tikz}
+\usetikzlibrary{shapes, calc, positioning}
 
 %--------------------------------------------------------------------------------------
 % Main variables
@@ -64,8 +68,8 @@
 %--------------------------------------------------------------------------------------
 \hypersetup{
     bookmarks=true,            % show bookmarks bar?
-    unicode=false,             % non-Latin characters in Acrobats bookmarks
-%    pdftitle={\vikcim},        % title
+    unicode=true,             % non-Latin characters in Acrobats bookmarks
+    pdftitle={\vikcim},        % title
     pdfauthor={\vikszerzo},    % author
     pdfsubject={\vikdoktipus}, % subject of the document
     pdfcreator={\vikszerzo},   % creator of the document
@@ -163,13 +167,13 @@ aboveskip=10pt}
 \onehalfspacing
 \include{titlepage}
 \tableofcontents\vfill
-\include{declaration}
-\include{abstract}
+%\include{declaration}
+%\include{abstract}
 \include{introduction}
 \include{chapter1}
 \include{chapter2}
 \include{chapter3}
-\include{acknowledgement}
+%\include{acknowledgement}
 
 %\listoffigures\addcontentsline{toc}{chapter}{Ábrák jegyzéke}
 %\listoftables\addcontentsline{toc}{chapter}{Táblázatok jegyzéke}

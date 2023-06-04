@@ -10,10 +10,73 @@ A fordítóprogramok nagyon komplex szoftverek. A legismertebb C/C++ fordítópr
 \section{Feladat specifikációja}
 Az Önálló laboratórium projekt keretében egy úgynevezett \textit{source-to-source} fordítót készítek. Amint azt \az{ \sectref{compilerintro}}.~fejezetben ismertettem, az ilyen fordítók forrásfájlok közötti fordításra alkalmasak, azaz a bemenetként kapott fájlokból nem futtatható kódot generálnak, hanem egy másik nyelvre fordítják át azt. A projektfeladat keretében létrehozott fordító \az{\sectref{qtgtkoverview}}.~fejezetben és \az{\tabref{sourcecomparison}}~táblázatban bemutatott keretrendszerek felületleíró nyelveinek egy részhalmazát képes a QML, Qt XML és GTK XML között átalakítani.
 
-\subsection{Közös részhalmaz meghatározása}
+\subsubsection{Támogatott formátumok}
+A fentiek értelmében a program a tárgyalt két keretrendszer XML- és JSON-alapú nyelvei között teszi lehetővé a fordítást. Ennek megfelelően a bemeneti fájloknak az adott platform specifikációit kielégítően kell felépülniük, a kiterjesztésüknek pedig egyértelműen meghatározhatóvá kell tenni a forrásfájl típusát (azaz a \texttt{.ui} (Qt XML), \texttt{.qml} és \texttt{.glade} (GTK XML) hármas közül kell kikerülnie). A program ez alapján tudja eldönteni, hogy melyik értelmező (parser) modult kell meghívnia.
+
+\subsection{Közös részhalmaz meghatározása} \label{sect:featuresubset}
 Mivel a feladat során a hangsúly a fordítóprogramok felépítésének és működésének megismerésén van, továbbá az ismertetett keretrendszerek rengeteg felhasználásiterület-specifikus komponenssel rendelkeznek, melyeknek gyakran nincs is pontos megfelelője a másik keretrendszerben, ezért a fordítandó komponenseket az alapvető felhasználói felületi elemekre korlátoztam. Így végül egyszerű konténerek, gombok és beviteli mezők fordítására van lehetőség a programban.
 
+A megfelelő részhalmaz kiválasztása a vártnál nagyobb kihívást jelentett, ugyanis sok felületi elem teljesen más tulajdonságokkal van ellátva a másik könyvtárhoz képest. Ilyen például, hogy GTK-ban alapvetően nem adható meg egy gomb pontos pozíciója és mérete, hanem kitölti a szülőkomponensben rendelkezésre álló helyet. Emiatt a gombok méretének beállítására csak akkor van lehetőség, ha a fordítás a két Qt-fájltípus, a \texttt{.ui} és a \texttt{.qml} között valósul meg (a fordítás iránya felcserélhető).
+
+A programban lehetőség van a bemeneti fájl struktúrájának vizuális megjelenítésére is. Ehhez kimeneti fájlként egy \texttt{.svg} kiterjesztésű fájlt kell megadni. Ekkor a program az első két fázisban (ld. következő alfejezet) ugyanúgy viselkedik, mint általános esetben, de a kódgenerálási lépés során felületleíró fájl helyett egy vektorgrafikus állományt készít, mely egy irányított gráf formájában mutatja be a bemeneti fájl felépítését.
+
 \section{A program felépítése és működése}
+% TODO: dir ábra
+\kep[0.67]{figures/dirtree.pdf}{A program architektúrája}{mycompilerarch}
+
+Ahogy arról már \az{\sectref{compilerarch}} fejezetben is szó volt, a fordítóprogramok általában háromrétegűek, és a rétegek jól elkülöníthetőek. A munkám során törekedtem ezen architektúra követésére: külön egységbe kerültek a forrásnyelvelemző, a belső reprezentáció és a kódgenerálás forrásfájljai. Ezeken túl még röviden kitérek arra is, hogy a felhasználók hogyan használhatják a programot a parancssoron keresztül.
+
+
+\subsection{Parancssori interfész}
+A felhasználók parancssoron keresztül indíthatják el a programot, itt van lehetőség a forrás- és kimeneti fájlok elérési útjának megadására. A megadott paramétereket a Python által biztosított \texttt{ArgumentParser} osztály segítségével dolgozzuk fel. A megadott paraméterek helyességét is ellenőrizzük, ez látható az alábbi kódrészleten:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{c}
+		\begin{minipage}[c]{0.6\linewidth}
+			\begin{lstlisting}[numbers=left, frame=single, language=Python, caption={Hibaüzenetet előidéző kódrészlet}, captionpos=b]
+  <item row="1" column="0">
+    <widget class="QTimeEdit" name="timeEdit"/>
+  </item>
+			\end{lstlisting}
+		\end{minipage}
+	\end{tabular}
+\end{table}
+
+%TODO: Belső reprezentáció objektumorientált
+% TODO: kép a tree-ről
+
+\subsection{Front end}
+A front end feladata, hogy ellenőrizze és értelmezze a kapott forrásfájlokat. A projektem során ide tartozó kódrészek a \textit{parsers} mappában kaptak helyet.
+
+\subsection{Middle end}
+Esetemben a middle end feladata egy egységes reprezentáció biztosítása a felhasználói felület elemei számára, hogy azok a forrás- és célplatformtól függetlenül legyenek kezelhetőek a programon belül.
+
+\kep[1]{figures/uml.pdf}{A belső reprezentáció felépítése}{fig:ir}
+
+\subsection{Back end}
+Kódgenerálás
+
+
+\subsection{Hibakezelés}
+A program implementálása során nagy hangsúlyt fektettem a hibakezelésre. Ez igaz mind a felhasználói parancsok értelmezésére, mind a program belső működésére, ezzel is könnyítve a későbbi bővítést és növelve a hibakeresés hatékonyságát.
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{c}
+		\begin{minipage}[c]{0.6\linewidth}
+			\begin{lstlisting}[numbers=left, frame=single, language=xml, caption={Hibaüzenetet előidéző kódrészlet}, captionpos=b]
+  <item row="1" column="0">
+    <widget class="QTimeEdit" name="timeEdit"/>
+  </item>
+			\end{lstlisting}
+		\end{minipage}
+	\end{tabular}
+\end{table}
+
+%Exceptionök, nem várt node-ok, programindítás paraméterei
+
 
 % köztes reprezentáció a különböző bemenetek alapján a middle-endre
 % xml, qml gráf rajzolása dotml schema (DOT) graphviz XML; svg generálása?
@@ -21,3 +84,12 @@ Mivel a feladat során a hangsúly a fordítóprogramok felépítésének és m�
 % gtk hw qt hw doxygen class hiersh
 
 % szintaxisfa rajzolása
+
+% generált felületekről képek
+
+\section{Jelenlegi limitációk, továbbfejlesztési lehetőségek}
+A program jelenleg a Qt és a GTK eszközkészletének csak egy kis részét fedi le, így könnyű olyan funkciót vagy felhasználóifelületi elemet találni, amelynek implementálásával érdemes lehet foglalkozni a jövőben.
+
+Mivel mindkét könyvtár többféle megoldást kínál a vezérlőelemek felhasználói felületen való elrendezésére, ezért kézenfekvőnek tűnhet a különböző konténerosztályok feldolgozásának támogatását kitűzni következő mérföldkőként. Ehhez a motivációt növeli, hogy az összetettebb felhasználói felületek mind használnak ilyen osztályokat, általában többet is, egymásba ágyazva. A program jelenleg nem támogatja teljeskörűen az ilyen felületeket: GTK és Qt közötti fordításnál például bizonyos bemenetek esetén előfordulhat, hogy az elemek nem az elvárt pozícióba kerülnek. Ennek legfőbb oka, hogy a GTK-s vezérlők a Qt-nál látottakkal ellentétben alapértelmezetten kitöltik a számukra rendelkezésre álló helyet, és ezt csak különböző konténerek bevezetésével lehet felülírni, ami Qt-ban látottakhoz képest sokkal összetettebb logikát igényel a programban.
+
+A másik fő irány, amiben a program továbbfejlesztésre szorul, az az elérhető vezérlők számának növelése. Ahogy arra \az{\sectref{featuresubset}} alfejezetben kitértem, a program jelenlegi állapotában csak néhány alapvető felhasználóifelületi elemet támogat, ami jelentősen korlátozza a felhasználási körét. Új vezérlők hozzáadása a program jelenlegi felépítése mellett már sokkal könnyebb, ugyanis már sok, az új elemek kezeléséhez szükséges megoldásra szükség volt a jelenlegi állapot eléréséhez is, ezek pedig a program moduláris mivoltából adódóan könnyen újrafelhasználhatóak. Ilyen megoldásnak tekinthető például a belső reprezentáció alaposztálya, az \texttt{AstBase}, melyből egy új osztályt leszármaztatva vehetjük fel a kívánt felületi elemet a programba. Emellett rendelkezésre állnak már egyes adatstruktúrák és fabejáró függvények a jövőbeni munka megkönnyítésére.
